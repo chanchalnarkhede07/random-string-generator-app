@@ -40,6 +40,13 @@ android {
 }
 
 dependencies {
+    //Added viewmodel and livedata dependency
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.lifecycle.livedata.ktx)
+    implementation(libs.androidx.runtime.livedata )
+    // Kotlin Coroutines
+    implementation (libs.kotlinx.coroutines.core)
+    implementation (libs.kotlinx.coroutines.android)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
