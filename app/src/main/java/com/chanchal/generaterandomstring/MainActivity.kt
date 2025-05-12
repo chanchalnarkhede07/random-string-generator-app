@@ -3,45 +3,26 @@ package com.chanchal.generaterandomstring
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.chanchal.generaterandomstring.ui.theme.GenerateRandomStringTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.chanchal.generaterandomstring.data.ContentProviderRepository
+import com.chanchal.generaterandomstring.ui.MainUIScreen
+import com.chanchal.generaterandomstring.viewmodel.MainViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
+        // Created repository variable
+        val repository = ContentProviderRepository(contentResolver)
+
         setContent {
-            GenerateRandomStringTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            // Created the ViewModel and given it to the repository
+            val viewModel: MainViewModel = viewModel(
+                factory = MainViewModel.provideFactory(repository)
+            )
+
+            // Called the screen composable function and passed the viewModel
+            MainUIScreen(viewModel)
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    GenerateRandomStringTheme {
-        Greeting("Android")
     }
 }
